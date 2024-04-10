@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import { getList } from '../lib/api/post'
-import { useHistory, Link } from 'react-router-dom'
+import { getList } from '../lib/api/post';
+import '../App.css';
 
 const List = () => {
   const [dataList, setDataList] = useState([]);
