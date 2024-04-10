@@ -3,21 +3,21 @@ import './index.css'
 import './App.css';
 import FormSection from 'components/FormSection';
 import AnswerSection from 'components/AnswerSection';
-import {OpenAI} from 'openai';
+import {OpenAI} from "openai";
 
 const App = () => {
 
   const openai = new OpenAI({
-    apikey: process.env.REACT_APP_OPENAI_API_KEY,
+    apiKey: process.env.REACT_APP_OPENAI_API_KEY,dangerouslyAllowBrowser: true
   });
 
   const [storedValues, setStoredValues] = useState([]);
 
   const generateResponse = async (newQuestion, setNewQuestion) => {
     let options = {
-      model: 'text-davinci-003',
+      model: 'gpt-4-0125-preview',
       temperature: 0,
-      max_tokens: 100,
+      max_tokens: 3000,
       top_p: 1,
       frequency_penalty: 0.0,
       presence_penalty: 0.0,
@@ -26,15 +26,15 @@ const App = () => {
 
   let completeOptions = {
       ...options,
-      prompt: newQuestion,
+      messages: [{ role: "user", content: newQuestion }],
   };
-  const response = await openai.createCompletion(completeOptions);
-
-  if (response.data.choices) {
+  const response = await openai.chat.completions.create(completeOptions);
+  console.log("応答", response.choices[0].message.content)
+  if (response.choices) {
     setStoredValues([
       {
         question: newQuestion,
-        answer: response.data.choices[0].text,
+        answer: response.choices[0].message.content,
       },
       ...storedValues,
     ]);

@@ -1,9 +1,9 @@
 import { useState } from "react"
 
-const FormSection = (generateResponse) => {
+const FormSection = ({generateResponse}) => {
   const [newQuestion, setNewQuestion] = useState('')
   return (
-    <div>
+    <div className="form-section">
       <textarea 
       rows="5" 
       className="form-control" 
